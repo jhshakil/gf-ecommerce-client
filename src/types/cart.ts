@@ -1,6 +1,6 @@
-import { Product } from "./product";
+import { TProduct } from "./product";
 
-export type CartItem = {
-  product: Product;
+export type TCartItem = {
+  product: TProduct;
   quantity: number;
 };

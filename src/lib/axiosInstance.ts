@@ -32,7 +32,7 @@ api.interceptors.response.use(
         path: "/",
         expires: new Date(0),
       });
-      window.location.href = "/login";
+      // window.location.href = "/login";
     }
     return Promise.reject(error);
   }

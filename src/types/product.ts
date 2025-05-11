@@ -1,4 +1,6 @@
-export type Product = {
+import { TCategory } from "./category";
+
+export type TProduct = {
   id: number;
   name: string;
   description: string;
@@ -7,15 +9,10 @@ export type Product = {
   stock: number;
   ratting: number;
   categoryId: number;
-  category: {
-    id: number;
-    name: string;
-    slug: string;
-    image: string;
-  };
+  category: TCategory;
 };
 
-export type ProductFilter = {
+export type TProductFilter = {
   category?: number;
   minPrice?: number;
   maxPrice?: number;
