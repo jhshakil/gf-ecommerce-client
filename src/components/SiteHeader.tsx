@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { useCart } from "@/context/cart.provider";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+// import {
+//   NavigationMenu,
+//   NavigationMenuItem,
+//   NavigationMenuLink,
+//   NavigationMenuList,
+//   navigationMenuTriggerStyle,
+// } from "@/components/ui/navigation-menu";
 
 import { buttonVariants } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
@@ -20,8 +20,10 @@ const SiteHeader = () => {
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="container flex h-16 items-center justify-between">
-        <div className="text-2xl font-bold">GF Shop</div>
-        <NavigationMenu>
+        <div className="text-2xl font-bold">
+          <Link href={"/"}>GF Shop</Link>
+        </div>
+        {/* <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuLink
@@ -44,7 +46,7 @@ const SiteHeader = () => {
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
-        </NavigationMenu>
+        </NavigationMenu> */}
 
         <div className="flex items-center gap-4">
           <Link

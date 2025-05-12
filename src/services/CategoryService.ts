@@ -7,8 +7,8 @@ export const getCategoriesService = async (): Promise<
   TCategory[] | undefined
 > => {
   try {
-    const response = await api.get("/categories");
-    return response.data;
+    const { data } = await api.get("/categories");
+    return data?.data;
   } catch (error) {
     console.error(error);
   }

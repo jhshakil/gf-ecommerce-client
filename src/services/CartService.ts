@@ -5,8 +5,8 @@ import { TCartItem } from "@/types/cart";
 
 export const getCartService = async (): Promise<TCartItem[] | undefined> => {
   try {
-    const response = await api.get("/cart");
-    return response.data;
+    const { data } = await api.get("/cart");
+    return data?.data;
   } catch (error) {
     console.error(error);
   }
@@ -17,8 +17,8 @@ export const addToCartService = async (
   quantity: number
 ): Promise<TCartItem | undefined> => {
   try {
-    const response = await api.post("/cart", { productId, quantity });
-    return response.data;
+    const { data } = await api.post("/cart", { productId, quantity });
+    return data?.data;
   } catch (error) {
     console.error(error);
   }
@@ -29,8 +29,8 @@ export const updateCartItemService = async (
   quantity: number
 ): Promise<TCartItem | undefined> => {
   try {
-    const response = await api.patch(`/cart/${productId}`, { quantity });
-    return response.data;
+    const { data } = await api.patch(`/cart/${productId}`, { quantity });
+    return data?.data;
   } catch (error) {
     console.error(error);
   }

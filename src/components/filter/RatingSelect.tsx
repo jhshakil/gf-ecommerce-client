@@ -1,10 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Slider } from "@/components/ui/slider";
+import { TProductFilter } from "@/types/product";
+import { debounce } from "@/lib/utils";
 
-const RatingSelect = () => {
-  const [value, setValue] = useState([1, 5]);
+type Props = {
+  filters: TProductFilter;
+  setFilters: (filters: TProductFilter) => void;
+};
+
+const RatingSelect = ({ filters, setFilters }: Props) => {
+  const [value, setValue] = useState([1]);
+
+  // Debounce the filter update
+  const debouncedSetFilter = useMemo(() => {
+    return debounce((val: number[]) => {
+      setFilters({
+        ...filters,
+        minRating: val[0],
+      });
+    }, 300);
+  }, [filters]);
 
   return (
     <div className="grid w-full gap-3">
@@ -13,7 +30,16 @@ const RatingSelect = () => {
           {value.join("- ")}
         </span>
       </div>
-      <Slider value={value} onValueChange={setValue} min={1} max={5} step={1} />
+      <Slider
+        value={value}
+        onValueChange={(val) => {
+          setValue(val);
+          debouncedSetFilter(val);
+        }}
+        min={1}
+        max={5}
+        step={1}
+      />
     </div>
   );
 };

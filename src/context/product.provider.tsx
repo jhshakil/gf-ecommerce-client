@@ -4,7 +4,7 @@ import { getCategoriesService } from "@/services/CategoryService";
 import { getProductsService } from "@/services/ProductService";
 import { TCategory } from "@/types/category";
 import { TProduct, TProductFilter } from "@/types/product";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type ProductContextType = {
   products: TProduct[];
@@ -48,6 +48,14 @@ export const ProductProvider = ({
       console.error("failed to fetch categories", error);
     }
   };
+
+  useEffect(() => {
+    fetchProducts();
+  }, [filters]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   return (
     <productContext.Provider

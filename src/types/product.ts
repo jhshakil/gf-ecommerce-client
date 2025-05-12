@@ -7,7 +7,7 @@ export type TProduct = {
   image: string;
   price: number;
   stock: number;
-  ratting: number;
+  rating: number;
   categoryId: number;
   category: TCategory;
 };

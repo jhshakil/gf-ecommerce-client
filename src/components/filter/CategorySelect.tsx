@@ -1,27 +1,51 @@
+"use client";
+
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { TCategory } from "@/types/category";
+import { TProductFilter } from "@/types/product";
+import { useState } from "react";
 
-const CategorySelect = () => {
+type Props = {
+  categories: TCategory[];
+  filters: TProductFilter;
+  setFilters: (filters: TProductFilter) => void;
+};
+
+const CategorySelect = ({ categories, filters, setFilters }: Props) => {
+  const [selectedCat, setSelectedCat] = useState<string>();
+
   return (
-    <Select>
+    <Select
+      disabled={!categories.length}
+      value={selectedCat}
+      onValueChange={(value) => {
+        setSelectedCat(value);
+        setFilters({
+          ...filters,
+          category: selectedCat ? parseInt(selectedCat) : undefined,
+        });
+      }}
+    >
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select Category" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Fruits</SelectLabel>
-          <SelectItem value="apple">Apple</SelectItem>
-          <SelectItem value="banana">Banana</SelectItem>
-          <SelectItem value="blueberry">Blueberry</SelectItem>
-          <SelectItem value="grapes">Grapes</SelectItem>
-          <SelectItem value="pineapple">Pineapple</SelectItem>
+          {categories.map((category, i) => (
+            <SelectItem
+              key={`home-select-category-${i}-${category.id}`}
+              value={String(category.id)}
+            >
+              {category.name}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>
