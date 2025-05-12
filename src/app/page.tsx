@@ -1,7 +1,11 @@
+import HeroSection from "@/components/HeroSection";
+import HomeProducts from "@/components/HomeProducts";
+
 export default function Home() {
   return (
-    <div className="">
-      <p>home page</p>
-    </div>
+    <main>
+      <HeroSection />
+      <HomeProducts />
+    </main>
   );
 }

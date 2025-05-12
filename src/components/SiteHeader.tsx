@@ -13,6 +13,7 @@ import {
 import { buttonVariants } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
+import SiteHeaderAction from "./SiteHeaderAction";
 
 const SiteHeader = () => {
   const { cartCount } = useCart();
@@ -42,16 +43,6 @@ const SiteHeader = () => {
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink
-                className={navigationMenuTriggerStyle()}
-                asChild
-              >
-                <Link href={"/customer"} passHref>
-                  Account
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 
@@ -70,6 +61,12 @@ const SiteHeader = () => {
               </span>
             )}
           </Link>
+          <div>
+            <Link href={"/login"} className={cn(buttonVariants())}>
+              Login
+            </Link>
+          </div>
+          <SiteHeaderAction />
         </div>
       </div>
     </header>
