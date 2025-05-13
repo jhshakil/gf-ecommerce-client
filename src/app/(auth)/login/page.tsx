@@ -43,6 +43,16 @@ const Page = () => {
     }
   };
 
+  const fillCredentials = (type: "admin" | "customer") => {
+    if (type === "admin") {
+      setEmail("jahidadmin@gmail.com");
+      setPassword("123456");
+    } else {
+      setEmail("jahid@gmail.com");
+      setPassword("123456");
+    }
+  };
+
   return (
     <div className="flex min-h-[90vh] items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
@@ -60,7 +70,28 @@ const Page = () => {
             </Link>
           </p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+
+        {/* Reviewer Login Buttons */}
+        <div className="flex gap-2 justify-center">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => fillCredentials("admin")}
+            className="text-xs"
+          >
+            Login as Admin
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => fillCredentials("customer")}
+            className="text-xs"
+          >
+            Login as Customer
+          </Button>
+        </div>
+
+        <form className="mt-4 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4 rounded-md">
             <div>
               <Label htmlFor="email">
