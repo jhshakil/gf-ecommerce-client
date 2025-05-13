@@ -6,13 +6,14 @@ import React from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { TProduct } from "@/types/product";
-import { addToCartService } from "@/services/CartService";
+import { useCart } from "@/context/cart.provider";
 
 type Props = {
   product: TProduct;
 };
 
 const ProductDetails = ({ product }: Props) => {
+  const { addToCart } = useCart();
   return (
     <div className="container py-8">
       <div className="grid gap-8 md:grid-cols-3">
@@ -62,7 +63,7 @@ const ProductDetails = ({ product }: Props) => {
             <Button
               size="lg"
               disabled={product.stock <= 0}
-              onClick={() => addToCartService(product.id, 1)}
+              onClick={() => addToCart(product.id, 1)}
             >
               Add to Cart
             </Button>

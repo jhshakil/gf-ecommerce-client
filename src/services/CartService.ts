@@ -6,7 +6,7 @@ import { TCartItem } from "@/types/cart";
 export const getCartService = async (): Promise<TCartItem[] | undefined> => {
   try {
     const { data } = await api.get("/cart");
-    return data?.data;
+    return data?.data?.cartItem;
   } catch (error) {
     console.error(error);
   }
@@ -41,6 +41,14 @@ export const removeFromCartService = async (
 ): Promise<void> => {
   try {
     await api.delete(`/cart/${productId}`);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const clearCartService = async (): Promise<void> => {
+  try {
+    await api.put("/cart/clear");
   } catch (error) {
     console.error(error);
   }

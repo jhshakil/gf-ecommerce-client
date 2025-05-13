@@ -11,7 +11,13 @@ type ProductContextType = {
   categories: TCategory[];
   loading: boolean;
   filters: TProductFilter;
+  pagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+  };
   setFilters: (filters: TProductFilter) => void;
+  setPage: (page: number) => void;
   fetchProducts: () => Promise<void>;
   fetchCategories: () => Promise<void>;
 };
@@ -27,12 +33,26 @@ export const ProductProvider = ({
   const [categories, setCategories] = useState<TCategory[]>([]);
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState<TProductFilter>({});
+  const [pagination, setPagination] = useState({
+    page: 1,
+    pageSize: 12,
+    total: 0,
+  });
 
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const resProducts = await getProductsService(filters);
-      if (resProducts) setProducts(resProducts);
+      const params = {
+        ...filters,
+        page: pagination.page,
+        limit: pagination.pageSize,
+      };
+      const resProducts = await getProductsService(params);
+      if (resProducts) {
+        const { data, total } = resProducts;
+        setProducts(data);
+        setPagination((prev) => ({ ...prev, total }));
+      }
     } catch (error) {
       console.error("Failed to fetch products", error);
     } finally {
@@ -49,9 +69,13 @@ export const ProductProvider = ({
     }
   };
 
+  const setPage = (page: number) => {
+    setPagination((prev) => ({ ...prev, page }));
+  };
+
   useEffect(() => {
     fetchProducts();
-  }, [filters]);
+  }, [filters, pagination.page]);
 
   useEffect(() => {
     fetchCategories();
@@ -64,7 +88,9 @@ export const ProductProvider = ({
         categories,
         loading,
         filters,
+        pagination,
         setFilters,
+        setPage,
         fetchProducts,
         fetchCategories,
       }}

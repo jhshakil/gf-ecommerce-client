@@ -15,6 +15,8 @@ const Page = () => {
     clearCart,
   } = useCart();
 
+  // console.log(cart);
+
   if (loading) {
     return (
       <div className="container py-8">
@@ -31,7 +33,7 @@ const Page = () => {
     <div className="container py-8">
       <h1 className="mb-8 text-3xl font-bold">Your Cart</h1>
 
-      {cart.length === 0 ? (
+      {cart?.length === 0 ? (
         <div className="flex flex-col items-center justify-center space-y-4 py-12">
           <h3 className="text-xl font-semibold">Your cart is empty</h3>
           <p className="text-muted-foreground">
@@ -44,7 +46,7 @@ const Page = () => {
       ) : (
         <div className="grid gap-8 md:grid-cols-3">
           <div className="space-y-4 md:col-span-2">
-            {cart.map((item) => (
+            {cart?.map((item) => (
               <div
                 key={item.product.id}
                 className="flex gap-4 rounded-lg border p-4"

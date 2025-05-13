@@ -11,8 +11,12 @@ import {
 import { LogOut, User } from "lucide-react";
 import AvatarComponent from "./AvatarComponent";
 import { useRouter } from "next/navigation";
+import { logoutService } from "@/services/AuthService";
+import { useAuth } from "@/context/auth.provider";
 
 const SiteHeaderAction = () => {
+  const { setUser, setCustomer } = useAuth();
+
   const router = useRouter();
   return (
     <div>
@@ -35,7 +39,11 @@ const SiteHeaderAction = () => {
 
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            //   onClick={() => handleLogout()}
+            onClick={() => {
+              logoutService();
+              setUser(null);
+              setCustomer(null);
+            }}
             className="cursor-pointer"
           >
             <LogOut className="mr-2 h-4 w-4" />

@@ -2,12 +2,14 @@
 
 import {
   addToCartService,
+  clearCartService,
   getCartService,
   removeFromCartService,
   updateCartItemService,
 } from "@/services/CartService";
 import { TCartItem } from "@/types/cart";
 import { createContext, useContext, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 type CartContextType = {
   cart: TCartItem[];
@@ -62,7 +64,9 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       }
     } catch (error) {
       console.error("Failed to add to cart", error);
-      throw error;
+      toast("Failed to add to cart");
+    } finally {
+      toast("Cart add successfully");
     }
   };
 
@@ -76,7 +80,9 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       );
     } catch (error) {
       console.error("Failed to update cart item", error);
-      throw error;
+      toast("Failed to update cart item");
+    } finally {
+      toast("Successfully update cart");
     }
   };
 
@@ -88,24 +94,34 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       );
     } catch (error) {
       console.error("Failed to remove from cart", error);
-      throw error;
+      toast("Failed to remove from cart");
+    } finally {
+      toast("Successfully remove from cart");
     }
   };
 
   const clearCart = async () => {
     try {
+      await clearCartService();
       setCart([]);
     } catch (error) {
       console.error("Failed to clear cart", error);
-      throw error;
+      toast("Failed to clear cart");
+    } finally {
+      toast("Successfully clear cart");
     }
   };
 
-  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
-  const cartTotal = cart.reduce(
-    (total, item) => total + item.product.price * item.quantity,
-    0
-  );
+  const cartCount = Array.isArray(cart)
+    ? cart.reduce((total, item) => total + item.quantity, 0)
+    : 0;
+
+  const cartTotal = Array.isArray(cart)
+    ? cart.reduce(
+        (total, item) => total + item.product.price * item.quantity,
+        0
+      )
+    : 0;
 
   return (
     <CartContext.Provider

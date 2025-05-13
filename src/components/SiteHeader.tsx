@@ -14,9 +14,12 @@ import { buttonVariants } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import SiteHeaderAction from "./SiteHeaderAction";
+import { useAuth } from "@/context/auth.provider";
 
 const SiteHeader = () => {
   const { cartCount } = useCart();
+  const { user } = useAuth();
+
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="container flex h-16 items-center justify-between">
@@ -64,11 +67,14 @@ const SiteHeader = () => {
             )}
           </Link>
           <div>
-            <Link href={"/login"} className={cn(buttonVariants())}>
-              Login
-            </Link>
+            {user?.email ? (
+              <SiteHeaderAction />
+            ) : (
+              <Link href={"/login"} className={cn(buttonVariants())}>
+                Login
+              </Link>
+            )}
           </div>
-          <SiteHeaderAction />
         </div>
       </div>
     </header>
